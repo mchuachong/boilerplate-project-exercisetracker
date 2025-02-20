@@ -7,10 +7,12 @@
 		"start": "node --watch index.js"
 	},
 	"dependencies": {
+		"body-parser": "^1.20.3",
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
 		"express": "^4.16.4",
-		"mongodb": "^6.13.0"
+		"mongodb": "^6.13.0",
+		"mongoose": "^8.10.1"
 	},
 	"repository": {
 		"url": "git+https://github.com/freeCodeCamp/boilerplate-project-exercisetracker.git"
