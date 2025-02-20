@@ -18,12 +18,12 @@ const ExerciseSchema = new Schema ({
   date: String
 })
 
-const LogSchema = new Schema ({
-  username: String,
-  count: Number,
-  _id: String,
-  log: []
-})
+// const LogSchema = new Schema ({
+//   username: String,
+//   count: Number,
+//   _id: String,
+//   log: []
+// })
 
 const Exercise = mongoose.model("Exercise",ExerciseSchema)
 const User = mongoose.model("User", UserSchema)
@@ -74,7 +74,14 @@ app.post('/api/users/:_id/exercises', async(req,res)=>{
     date: (date ? new Date(date) : new Date()).toDateString()
   })
   const add_ex = await exObj.save()
-   res.json(exObj)
+   res.json({
+    username: user.username,
+    description: desc,
+    duration: parseInt(duration),
+    date: date ? new Date(date).toDateString() : new Date().toDateString(),
+    _id: id
+    
+   })
 }
   }catch(err){
   console.log(err)
@@ -100,13 +107,15 @@ app.get('/api/users/:_id/logs', async(req,res)=>{
         filter.date= dateObj
       }
       console.log(dateObj)
-    const logs = await Exercise.find(filter).limit(limit)
+    const log = await Exercise.find(filter).limit(+limit ?? 500)
+
     const logObj = {
       username: user.username,
-      count: logs.length,
-      log: logs
+      count: log.length,
+      log
     }
     res.json(logObj)
+    console.log(from,to,limit,user._id)
   }catch(err){
     res.json({error: err})}
 })
